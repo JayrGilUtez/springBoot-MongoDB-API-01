@@ -1,5 +1,6 @@
 package mx.edu.utez.springbootmongodb.controllers;
 
+
 import mx.edu.utez.springbootmongodb.models.record.Record;
 import org.springframework.web.bind.annotation.*;
 import mx.edu.utez.springbootmongodb.services.record.RecordService;
@@ -33,15 +34,11 @@ public class RecordController {
                 .trashcanId(recordDto.getTrashcanId())
                 .distance(recordDto.getDistance())
                 .isFull(recordDto.getIsFull())
-                .dateAndTime(LocalDateTime.now())
+                .dateAndTime(LocalDateTime.now().minusHours(6).toString())
                 .location(recordDto.getLocation())
                 .build();
         return service.save(record);
 
     }
-
-
-
-
 
 }

@@ -16,13 +16,15 @@ import java.time.LocalDateTime;
 public class MqttSubscriber implements MqttCallback {
     private final RecordRepository repository;
 
+    // LOCAL MqttSubscriber
+
     public MqttSubscriber(RecordRepository repository) {
         this.repository = repository;
     }
 
     private static final String brokerUrl = "tcp://broker.emqx.io:1883";
     private static final String clientId = "mqttx_191af3a7";
-    private static final String topic = "sensor/ultrasonico";
+    private static final String topic = "simbba/localTopic";
     private static final int subQos = 0; // es el nivel de qos del subscriber
 
 

@@ -1,13 +1,11 @@
 package mx.edu.utez.springbootmongodb.security.entity;
 
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
-import java.util.Set;
-import java.util.stream.Collectors;
+
+import mx.edu.utez.springbootmongodb.models.user.User;
 
 public class UserDetailsImpl implements UserDetails {
 
@@ -15,9 +13,9 @@ public class UserDetailsImpl implements UserDetails {
     private String password;
     private boolean blocked;
     private boolean enabled;
-    private Collection<? extends GrantedAuthority> authorities;
+    private String authorities;
 
-    public UserDetailsImpl(String mail, String password, boolean blocked, boolean enabled, Collection<? extends GrantedAuthority> authorities) {
+    public UserDetailsImpl(String mail, String password, boolean blocked, boolean enabled, String authorities) {
         this.mail = mail;
         this.password = password;
         this.blocked = blocked;
@@ -26,9 +24,8 @@ public class UserDetailsImpl implements UserDetails {
     }
 
     public static UserDetailsImpl build(User user) {
-        Set<GrantedAuthority> authorities = user.getAuthorities().stream().map(role -> new SimpleGrantedAuthority(role.getAuthority())).collect(Collectors.toSet());
         return new UserDetailsImpl(
-                user.getUsername(), user.getPassword(), user.isAccountNonLocked(), user.isEnabled(), authorities
+                user.getMail(), user.getPassword(), user.isBlocked(), user.isStatus(), user.getRole()
         );
     }
 

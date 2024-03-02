@@ -5,12 +5,12 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import mx.edu.utez.springbootmongodb.security.entity.UserDetailsImpl;
 import mx.edu.utez.springbootmongodb.security.service.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -35,7 +35,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             Claims claims = provider.resolveClaims(request);
             if (claims != null && provider.validateClaims(claims, token)) {
                 String mail = claims.getSubject();
-                UserDetailsImpl user = (UserDetailsImpl) service.loadUserByUsername(mail);
+                UserDetails user = service.loadUserByUsername(mail);
                 Authentication auth =
                         new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
                 SecurityContextHolder.getContext().setAuthentication(auth);

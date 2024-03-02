@@ -14,18 +14,17 @@ import java.time.LocalDateTime;
 
 @Service
 public class MqttSubscriber implements MqttCallback {
-    private final RecordRepository repository;
+
 
     // AWS MqttSubscriber config
 
+    private final RecordRepository repository;
     public MqttSubscriber(RecordRepository repository) {
         this.repository = repository;
     }
-
-    private static final String brokerUrl = "tcp://34.226.194.148";
+    private static final String brokerUrl = "tcp://3.80.88.147"; // mientras la ip no sea elastica esta direccion ira cambiando
     private static final String clientId = "mqttx_8f866485";
-    //TODO: Corregir el nombre del topic (es simbba no simmba) (-_-)
-    private static final String topic = "simmba/test";
+    private static final String topic = "simbba/aws";
     private static final int subQos = 0; // es el nivel de qos del subscriber
 
 

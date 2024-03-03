@@ -18,17 +18,14 @@ public class UserService {
         this.repository = repository;
     }
 
-    @Transactional(readOnly = true)
     public ResponseEntity<ApiResponse> findAll() {
         return new ResponseEntity<>(new ApiResponse(repository.findAll(), HttpStatus.OK), HttpStatus.OK);
     }
 
-    @Transactional(readOnly = true)
     public Optional<User> findByMail(String mail) {
         return repository.findByMail(mail);
     }
 
-    @Transactional(readOnly = true)
     public ResponseEntity<ApiResponse> findById(String id) {
         return new ResponseEntity<>(new ApiResponse(repository.findById(id), HttpStatus.OK), HttpStatus.OK);
     }

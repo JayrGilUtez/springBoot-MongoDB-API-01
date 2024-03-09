@@ -61,7 +61,7 @@ public class MainSecurity {
         http.cors(Customizer.withDefaults()).csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(req ->
                         req.requestMatchers(WHITE_LIST).permitAll()
-                                .requestMatchers("/api/v1/record/**").hasRole("ADMIN")
+                                .requestMatchers("/api/v1/record/**").hasAuthority("ADMIN")
                                 .anyRequest().authenticated()
                 )
                 .httpBasic(Customizer.withDefaults())

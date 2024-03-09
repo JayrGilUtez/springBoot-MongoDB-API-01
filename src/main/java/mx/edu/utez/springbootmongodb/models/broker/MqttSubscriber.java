@@ -14,17 +14,17 @@ import java.time.LocalDateTime;
 
 @Service
 public class MqttSubscriber implements MqttCallback {
-
-
-    // AWS MqttSubscriber config
-
     private final RecordRepository repository;
+
+    // LOCAL MqttSubscriber
+
     public MqttSubscriber(RecordRepository repository) {
         this.repository = repository;
     }
-    private static final String brokerUrl = "tcp://3.80.88.147"; // mientras la ip no sea elastica esta direccion ira cambiando
-    private static final String clientId = "mqttx_8f866485";
-    private static final String topic = "simbba/aws";
+
+    private static final String brokerUrl = "tcp://broker.emqx.io:1883";
+    private static final String clientId = "mqttx_191af3a7";
+    private static final String topic = "simbba/localTopic";
     private static final int subQos = 0; // es el nivel de qos del subscriber
 
 
@@ -52,13 +52,12 @@ public class MqttSubscriber implements MqttCallback {
 
             String payload = mqttMessage.toString();
             ObjectMapper mapper = new ObjectMapper();
-            Record record = mapper.readValue(payload, Record.class); // Convertimos el payload a un json
+            Record record = mapper.readValue(payload, Record.class);
             //record.setDateAndTime(LocalDateTime.now().minusHours(6).toString()); // por alguna razon ahora no es necesario restar 6 horas
             record.setDateAndTime(LocalDateTime.now().toString());
             System.out.println("objeto " + record);
             //System.out.println("payload -> " + mqttMessage);
 
-            // Guardamos el registro en la base de datos
             repository.save(record);
 
         } catch (Exception e) {

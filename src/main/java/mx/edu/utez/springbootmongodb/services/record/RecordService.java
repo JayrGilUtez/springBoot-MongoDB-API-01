@@ -21,8 +21,8 @@ public class RecordService {
         return repository.findAll();
     }
 
-    public List<Record> findRecordsByTrashcanId(Integer id){
-        return repository.findAllByTrashcanId(id);
+    public List<Record> findRecordsBySerialNumber(Integer serialNumber){
+        return repository.findAllBySerialNumber(serialNumber);
 
     }
 

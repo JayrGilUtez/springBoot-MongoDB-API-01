@@ -9,7 +9,7 @@ import java.util.List;
 @Repository
 public interface RecordRepository extends MongoRepository<Record, String> {
 
-    List<Record> findAllByTrashcanId(Integer trashcanId);
+    List<Record> findAllBySerialNumber(Integer serialNumber);
 
 
 

@@ -23,15 +23,15 @@ public class RecordController {
         return service.findAll();
     }
 
-    @GetMapping("/{id}")
-    public List<Record> getAllByTrashcanId(@PathVariable Integer id){
-        return service.findRecordsByTrashcanId(id);
+    @GetMapping("/{serialNumber}")
+    public List<Record> getAllBySerialNumber(@PathVariable Integer serialNumber){
+        return service.findRecordsBySerialNumber(serialNumber);
     }
 
     @PostMapping("/")
     public Record save(@RequestBody RecordDto recordDto){
         Record record = Record.builder()
-                .trashcanId(recordDto.getTrashcanId())
+                .serialNumber(recordDto.getSerialNumber())
                 .distance(recordDto.getDistance())
                 .isFull(recordDto.getIsFull())
                 .dateAndTime(LocalDateTime.now().minusHours(6).toString())

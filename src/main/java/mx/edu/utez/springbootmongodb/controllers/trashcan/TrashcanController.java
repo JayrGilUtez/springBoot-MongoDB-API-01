@@ -2,7 +2,9 @@ package mx.edu.utez.springbootmongodb.controllers.trashcan;
 
 import mx.edu.utez.springbootmongodb.models.trashcan.Trashcan;
 import mx.edu.utez.springbootmongodb.services.TrashcanService;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -31,9 +33,28 @@ public class TrashcanController {
                 .trashcanName(trashcanDto.getTrashcanName())
                 .build();
         return service.save(trashcan);
-
     }
 
+    @PutMapping("/")
+    public Trashcan update(@RequestBody TrashcanDto trashcanDto) {
+        // Primero buscamos el Trashcan existente por el serialNumber que viene en el dto
+        Trashcan existingTrashcan = service.findBySerialNumber(trashcanDto.getSerialNumber());
+        // Si existe el Trashcan
+        if (existingTrashcan != null) {
+            // Actualizamos los campos ese trashcan
+            existingTrashcan.setTrashcanName(trashcanDto.getTrashcanName());
+            // Por ultimo hacemos un save para que se actualice en la db
+            return service.save(existingTrashcan);
+        } else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Trashcan not found");
+        }
+    }
+
+
+    @DeleteMapping("/{serialNumber}")
+    public void deleteBySerialNumber(@PathVariable Integer serialNumber){
+        service.deleteBySerialNumber(serialNumber);
+    }
 
 
 

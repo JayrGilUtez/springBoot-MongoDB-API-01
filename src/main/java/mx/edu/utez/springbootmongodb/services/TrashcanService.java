@@ -15,6 +15,10 @@ public class TrashcanService {
         return repository.save(trashcan);
     }
 
+    public Trashcan findBySerialNumber(Integer serialNumber){
+        return repository.findBySerialNumber(serialNumber);
+    }
+
     public List<Trashcan> findAll(){
         return repository.findAll();
     }
@@ -22,5 +26,11 @@ public class TrashcanService {
     public Trashcan findByName(String trashcanName){
         return repository.findByTrashcanName(trashcanName);
     }
+
+    public void deleteBySerialNumber(Integer serialNumber){
+        repository.deleteBySerialNumber(serialNumber);
+    }
+
+
 
 }

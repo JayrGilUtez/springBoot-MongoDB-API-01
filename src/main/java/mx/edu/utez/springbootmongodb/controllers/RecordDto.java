@@ -9,10 +9,9 @@ import mx.edu.utez.springbootmongodb.models.location.Location;
 @Builder
 @AllArgsConstructor
 public class RecordDto {
-    private Integer trashcanId;
+    private Integer serialNumber;
     private Double distance;
     private Boolean isFull;
     private String dateAndTime;
     private Location location;
-
 }

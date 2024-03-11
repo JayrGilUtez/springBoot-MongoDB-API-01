@@ -55,8 +55,8 @@ public class MqttSubscriber implements MqttCallback {
             Record record = mapper.readValue(payload, Record.class); // Convertimos el payload a un json
             //record.setDateAndTime(LocalDateTime.now().minusHours(6).toString()); // por alguna razon ahora no es necesario restar 6 horas
             record.setDateAndTime(LocalDateTime.now().toString());
-            System.out.println("objeto " + record);
-            //System.out.println("payload -> " + mqttMessage);
+            System.out.println("payload -> " + mqttMessage + "\n");
+            System.out.println("Objeto -> " + record + "\n");
 
             // Guardamos el registro en la base de datos
             repository.save(record);

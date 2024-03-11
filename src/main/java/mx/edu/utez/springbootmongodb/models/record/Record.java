@@ -20,10 +20,9 @@ public class Record {
     @Id
     private String id;
 
-    private Integer trashcanId;
+    private Integer serialNumber;
     private Double distance;
     private Boolean isFull;
     private String dateAndTime;
     private Location location;
-
 }

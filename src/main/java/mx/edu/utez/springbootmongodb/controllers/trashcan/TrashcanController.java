@@ -1,8 +1,10 @@
 package mx.edu.utez.springbootmongodb.controllers.trashcan;
 
+import mx.edu.utez.springbootmongodb.config.ApiResponse;
 import mx.edu.utez.springbootmongodb.models.trashcan.Trashcan;
 import mx.edu.utez.springbootmongodb.services.TrashcanService;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -17,7 +19,7 @@ public class TrashcanController {
     }
 
     @GetMapping("/")
-    public List<Trashcan> getAll(){
+    public ResponseEntity<ApiResponse> getAll(){
         return service.findAll();
     }
 

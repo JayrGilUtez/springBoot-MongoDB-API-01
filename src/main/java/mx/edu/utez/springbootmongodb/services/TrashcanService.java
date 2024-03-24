@@ -1,7 +1,10 @@
 package mx.edu.utez.springbootmongodb.services;
 
+import mx.edu.utez.springbootmongodb.config.ApiResponse;
 import mx.edu.utez.springbootmongodb.models.trashcan.Trashcan;
 import mx.edu.utez.springbootmongodb.models.trashcan.TrashcanRepository;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import java.util.List;
 @Service
@@ -19,8 +22,8 @@ public class TrashcanService {
         return repository.findBySerialNumber(serialNumber);
     }
 
-    public List<Trashcan> findAll(){
-        return repository.findAll();
+    public ResponseEntity<ApiResponse> findAll(){
+        return new ResponseEntity<>(new ApiResponse(repository.findAll(), HttpStatus.OK), HttpStatus.OK);
     }
 
     public Trashcan findByName(String trashcanName){

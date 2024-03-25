@@ -16,6 +16,7 @@ public class Trashcan {
     @Id
     private String id;
 
-    private Integer serialNumber; // serialNumber es el trashcanId que mada el esp
+    private Integer serialNumber; // serialNumber es el trashcanId que mada el esp.
     private String trashcanName;
+    private Integer level; // Nivel de llenado.
 }

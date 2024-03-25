@@ -8,6 +8,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.Objects;
+
 
 @RestController
 @RequestMapping("api/v1/trashcan")
@@ -22,7 +24,12 @@ public class TrashcanController {
         return service.findAll();
     }
 
-    @GetMapping("/{trashcanName}")
+    @GetMapping("/{serialNumber}")
+    public ResponseEntity<ApiResponse> getBySerialNumber(@PathVariable Integer serialNumber){
+        return service.findBySerialNumber(serialNumber);
+    }
+
+    @GetMapping("/name/{trashcanName}")
     public ResponseEntity<ApiResponse> findByTrashcanName(@PathVariable String trashcanName){
         return service.findByName(trashcanName);
     }
@@ -32,6 +39,7 @@ public class TrashcanController {
         Trashcan trashcan = Trashcan.builder()
                 .serialNumber(trashcanDto.getSerialNumber())
                 .trashcanName(trashcanDto.getTrashcanName())
+                .level(0) // 0% es el nivel por default
                 .build();
         return service.save(trashcan);
     }
@@ -39,10 +47,15 @@ public class TrashcanController {
     @PutMapping("/")
     public Trashcan update(@RequestBody TrashcanDto trashcanDto) {
         // Primero buscamos el Trashcan existente por el serialNumber que viene en el dto
-        Trashcan existingTrashcan = service.findBySerialNumber(trashcanDto.getSerialNumber());
+        ResponseEntity<ApiResponse> apiResponse = service.findBySerialNumber(trashcanDto.getSerialNumber());
+
+        Trashcan existingTrashcan =  (Trashcan) Objects.requireNonNull(apiResponse.getBody()).getData();
+
+        //Trashcan existingTrashcan = service.findBySerialNumber(trashcanDto.getSerialNumber());
+
         // Si existe el Trashcan
         if (existingTrashcan != null) {
-            // Actualizamos los campos ese trashcan
+            // Actualizamos los campos de ese trashcan
             existingTrashcan.setTrashcanName(trashcanDto.getTrashcanName());
             // Por ultimo hacemos un save para que se actualice en la db
             return service.save(existingTrashcan);

@@ -6,7 +6,7 @@ import mx.edu.utez.springbootmongodb.models.trashcan.TrashcanRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import java.util.List;
+
 @Service
 public class TrashcanService {
     private final TrashcanRepository repository;
@@ -18,8 +18,9 @@ public class TrashcanService {
         return repository.save(trashcan);
     }
 
-    public Trashcan findBySerialNumber(Integer serialNumber){
-        return repository.findBySerialNumber(serialNumber);
+    public ResponseEntity<ApiResponse> findBySerialNumber(Integer serialNumber){
+        return new ResponseEntity<>(new ApiResponse(repository.findBySerialNumber(serialNumber), HttpStatus.OK),HttpStatus.OK);
+        //return repository.findBySerialNumber(serialNumber);
     }
 
     public ResponseEntity<ApiResponse> findAll(){
@@ -28,7 +29,7 @@ public class TrashcanService {
 
     public ResponseEntity<ApiResponse> findByName(String trashcanName){
         return new ResponseEntity<>(new ApiResponse(repository.findByTrashcanName(trashcanName),HttpStatus.OK), HttpStatus.OK);
-        //return repository.findByTrashcanName(trashcanName);
+
     }
 
     public void deleteBySerialNumber(Integer serialNumber){

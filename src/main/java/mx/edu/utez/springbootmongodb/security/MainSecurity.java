@@ -62,6 +62,7 @@ public class MainSecurity {
                 .authorizeHttpRequests(req ->
                         req.requestMatchers(WHITE_LIST).permitAll()
                                 .requestMatchers("/api/v1/record/**").hasAuthority("ADMIN")
+                                .requestMatchers("/api/v1/trashcan/**").hasAuthority("ADMIN")
                                 .anyRequest().authenticated()
                 )
                 .httpBasic(Customizer.withDefaults())

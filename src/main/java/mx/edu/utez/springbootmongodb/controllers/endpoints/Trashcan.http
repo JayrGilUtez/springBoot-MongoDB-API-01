@@ -1,0 +1,38 @@
+###
+GET http://localhost:82/api/v1/trashcan
+Authorization: Bearer <jwt-token>
+
+###
+GET http://localhost:82/api/v1/trashcan/{{serialNumber}}
+Authorization: Bearer <jwt-token>
+
+###
+GET http://localhost:82/api/v1/trashcan/name/{{trashcanName}}
+Authorization: Bearer <jwt-token>
+
+###
+POST http://localhost:82/api/v1/trashcan/save/
+Content-Type: application/json
+Authorization: Bearer <jwt-token>
+
+
+{
+  "serialNumber": 0,
+  "trashcanName": "",
+  "level": 0
+}
+
+###
+PUT http://localhost:82/api/v1/trashcan/update/
+Content-Type: application/json
+Authorization: Bearer <jwt-token>
+
+{
+  "serialNumber": 0,
+  "trashcanName": "",
+  "level": 0
+}
+
+###
+DELETE http://localhost:82/api/v1/trashcan/delete/{{serialNumber}}
+Authorization: Bearer <jwt-token>

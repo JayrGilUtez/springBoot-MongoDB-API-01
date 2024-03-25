@@ -34,7 +34,7 @@ public class TrashcanController {
         return service.findByName(trashcanName);
     }
 
-    @PostMapping("/")
+    @PostMapping("save/")
     public Trashcan save(@RequestBody TrashcanDto trashcanDto){
         Trashcan trashcan = Trashcan.builder()
                 .serialNumber(trashcanDto.getSerialNumber())
@@ -44,7 +44,7 @@ public class TrashcanController {
         return service.save(trashcan);
     }
 
-    @PutMapping("/")
+    @PutMapping("update/")
     public Trashcan update(@RequestBody TrashcanDto trashcanDto) {
         // Primero buscamos el Trashcan existente por el serialNumber que viene en el dto
         ResponseEntity<ApiResponse> apiResponse = service.findBySerialNumber(trashcanDto.getSerialNumber());
@@ -65,7 +65,7 @@ public class TrashcanController {
     }
 
 
-    @DeleteMapping("/{serialNumber}")
+    @DeleteMapping("delete/{serialNumber}")
     public void deleteBySerialNumber(@PathVariable Integer serialNumber){
         service.deleteBySerialNumber(serialNumber);
     }

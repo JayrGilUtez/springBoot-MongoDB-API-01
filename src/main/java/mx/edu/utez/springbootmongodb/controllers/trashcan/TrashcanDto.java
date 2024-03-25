@@ -10,4 +10,5 @@ import lombok.*;
 public class TrashcanDto {
     private Integer serialNumber;
     private String trashcanName;
+    private Integer level; // Nivel de llenado.
 }

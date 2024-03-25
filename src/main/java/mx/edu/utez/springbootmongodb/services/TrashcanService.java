@@ -26,8 +26,9 @@ public class TrashcanService {
         return new ResponseEntity<>(new ApiResponse(repository.findAll(), HttpStatus.OK), HttpStatus.OK);
     }
 
-    public Trashcan findByName(String trashcanName){
-        return repository.findByTrashcanName(trashcanName);
+    public ResponseEntity<ApiResponse> findByName(String trashcanName){
+        return new ResponseEntity<>(new ApiResponse(repository.findByTrashcanName(trashcanName),HttpStatus.OK), HttpStatus.OK);
+        //return repository.findByTrashcanName(trashcanName);
     }
 
     public void deleteBySerialNumber(Integer serialNumber){

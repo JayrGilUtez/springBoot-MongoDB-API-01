@@ -8,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.List;
 
 @RestController
 @RequestMapping("api/v1/trashcan")
@@ -24,7 +23,7 @@ public class TrashcanController {
     }
 
     @GetMapping("/{trashcanName}")
-    public Trashcan findByTrashcanName(@PathVariable String trashcanName){
+    public ResponseEntity<ApiResponse> findByTrashcanName(@PathVariable String trashcanName){
         return service.findByName(trashcanName);
     }
 

@@ -18,5 +18,5 @@ public class Trashcan {
 
     private Integer serialNumber; // serialNumber es el trashcanId que mada el esp.
     private String trashcanName;
-    private Integer level; // Nivel de llenado.
+    private Double level; // Nivel de llenado.
 }

@@ -39,7 +39,7 @@ public class TrashcanController {
         Trashcan trashcan = Trashcan.builder()
                 .serialNumber(trashcanDto.getSerialNumber())
                 .trashcanName(trashcanDto.getTrashcanName())
-                .level(0) // 0% es el nivel por default
+                .level(0.0) // 0% es el nivel por default
                 .build();
         return service.save(trashcan);
     }

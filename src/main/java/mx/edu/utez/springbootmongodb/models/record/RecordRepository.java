@@ -10,6 +10,8 @@ import java.util.List;
 public interface RecordRepository extends MongoRepository<Record, String> {
 
     List<Record> findAllBySerialNumber(Integer serialNumber);
+    Record findFirstBySerialNumberOrderByDateAndTimeDesc(Integer serialNumber);
+
 
 
 

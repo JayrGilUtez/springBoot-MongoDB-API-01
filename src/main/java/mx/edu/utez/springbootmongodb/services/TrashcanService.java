@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import java.text.DecimalFormat;
+import java.util.List;
 
 @Service
 public class TrashcanService {
@@ -29,36 +30,23 @@ public class TrashcanService {
     }
 
     public ResponseEntity<ApiResponse> findAll(){
-        return new ResponseEntity<>(new ApiResponse(trashcanRepository.findAll(), HttpStatus.OK), HttpStatus.OK);
+        List<Trashcan> trashcans = trashcanRepository.findAll();
+        for(Trashcan trashcan : trashcans){
+            Record lastRecord = recordRepository.findFirstBySerialNumberOrderByDateAndTimeDesc(trashcan.getSerialNumber());
+            trashcan.setLevel(getLevel(lastRecord.getDistance()));
+        }
+        return new ResponseEntity<>(new ApiResponse(trashcans, HttpStatus.OK), HttpStatus.OK);
     }
 
     public ResponseEntity<ApiResponse> findByName(String trashcanName){
         return new ResponseEntity<>(new ApiResponse(trashcanRepository.findByTrashcanName(trashcanName),HttpStatus.OK), HttpStatus.OK);
     }
 
-    public Trashcan updateLevelByLastRecord(Integer serialNumber) {
-        Record lastRecord = recordRepository.findFirstBySerialNumberOrderByDateAndTimeDesc(serialNumber);
-        Trashcan trashcan = trashcanRepository.findBySerialNumber(serialNumber);
-        if (trashcan != null && lastRecord != null) {
-
-            // Aqui va el calculo del porcenteaje de llenado partiendo de la distancia detectada
-
-            //trashcan.setLevel(lastRecord.getDistance());
-            trashcan.setLevel(getLevel(lastRecord.getDistance()));
-
-
-            return trashcanRepository.save(trashcan);
-        }
-        return null;
-    }
-
-
 
     public void deleteBySerialNumber(Integer serialNumber){
         trashcanRepository.deleteBySerialNumber(serialNumber);
     }
 
-    //
     public Double getLevel(Double distance){
         DecimalFormat df = new DecimalFormat("#.#");
         Double level = ((distance * 100)/90);

@@ -25,7 +25,7 @@ public class InitialConfig implements CommandLineRunner {
         Role adminRole = getOrSaveRole(new Role("ADMIN"));
 
         User user = new User();
-        user.setMail("noriega@mail.com");
+        user.setMail("noriega@gmail.com");
         user.setPassword(passwordEncoder.encode("123456"));
         Set<Role> roles = new HashSet<>();
         roles.add(adminRole);

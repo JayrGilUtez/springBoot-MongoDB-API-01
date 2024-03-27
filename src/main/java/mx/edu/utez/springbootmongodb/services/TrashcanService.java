@@ -8,7 +8,6 @@ import mx.edu.utez.springbootmongodb.models.trashcan.TrashcanRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import java.text.DecimalFormat;
 import java.util.List;
 
 @Service
@@ -47,10 +46,11 @@ public class TrashcanService {
         trashcanRepository.deleteBySerialNumber(serialNumber);
     }
 
-    public Double getLevel(Double distance){
-        DecimalFormat df = new DecimalFormat("#.#");
-        Double level = ((distance * 100)/90);
-        return Double.valueOf(df.format(level));
+    public double getLevel(double distance){
+        double dMax = 90.0;
+        double dMin = 10.0;
+        double level = (1-( (distance - dMin) / (dMax - dMin) )) * 100;
+        return Math.round(level * 10.0) / 10.0;
     }
 
 }

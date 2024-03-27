@@ -10,8 +10,8 @@ class TrashcanServiceTest {
     @Test
     void testGetLevel() {
         TrashcanService trashcanService = new TrashcanService(null, null);
-        Double distance = 12.0; // Distancia detectada
-        Double expectedLevel = 13.3; // Porcetnaje esperado
+        double distance = 12.0; // Distancia detectada
+        double expectedLevel = 97.5; // Porcetnaje esperado
         assertEquals(expectedLevel, trashcanService.getLevel(distance));
     }
 }

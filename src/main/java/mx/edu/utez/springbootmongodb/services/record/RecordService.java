@@ -26,4 +26,13 @@ public class RecordService {
 
     }
 
+    // "YYYY-MM". --> "2024-03" para Marzo 2024
+
+
+    public List<Record> findRecordsBySerialNumberAndMonth(Integer serialNumber, String month){
+        return repository.findBySerialNumberAndMonth(serialNumber, month);
+    }
+
+
+
 }

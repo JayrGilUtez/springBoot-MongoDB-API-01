@@ -5,6 +5,7 @@ import mx.edu.utez.springbootmongodb.models.role.Role;
 import mx.edu.utez.springbootmongodb.models.role.RoleRepository;
 import mx.edu.utez.springbootmongodb.models.user.User;
 import mx.edu.utez.springbootmongodb.models.user.UserRepository;
+import mx.edu.utez.springbootmongodb.services.db.DatabaseService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -19,13 +20,17 @@ public class InitialConfig implements CommandLineRunner {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final RoleRepository roleRepository;
+    // Borrar base
+    private final DatabaseService databaseService;
 
     @Override
     public void run(String... args) throws Exception {
-        Role adminRole = getOrSaveRole(new Role("ADMIN"));
+        // Borrar base
+        databaseService.resetDatabase();
 
+        Role adminRole = getOrSaveRole(new Role("ADMIN"));
         User user = new User();
-        user.setMail("noriega@gmail.com");
+        user.setMail("noriega@mail.com");
         user.setPassword(passwordEncoder.encode("123456"));
         Set<Role> roles = new HashSet<>();
         roles.add(adminRole);

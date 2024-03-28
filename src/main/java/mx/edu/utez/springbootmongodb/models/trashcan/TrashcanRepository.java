@@ -13,4 +13,5 @@ public interface TrashcanRepository extends MongoRepository<Trashcan, String> {
 
 
 
+
 }

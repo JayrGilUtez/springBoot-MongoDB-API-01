@@ -1,6 +1,7 @@
 package mx.edu.utez.springbootmongodb.controllers.trashcan;
 
 import mx.edu.utez.springbootmongodb.config.ApiResponse;
+import mx.edu.utez.springbootmongodb.models.record.RecordRepository;
 import mx.edu.utez.springbootmongodb.models.trashcan.Trashcan;
 import mx.edu.utez.springbootmongodb.services.TrashcanService;
 import org.springframework.http.HttpStatus;
@@ -15,8 +16,10 @@ import java.util.Objects;
 @RequestMapping("api/v1/trashcan")
 public class TrashcanController {
     private final TrashcanService service;
-    public TrashcanController(TrashcanService service) {
+    private final RecordRepository recordService;
+    public TrashcanController(TrashcanService service, RecordRepository recordService) {
         this.service = service;
+        this.recordService = recordService;
     }
 
     @GetMapping("/")

@@ -29,6 +29,9 @@ public class TrashcanService {
     }
 
     public ResponseEntity<ApiResponse> findAll(){
+        // Aqui podemos poner el metdo para eliminar los records con distancias > 100
+        recordRepository.deleteAllByDistanceGreaterThan(100.0);
+
         List<Trashcan> trashcans = trashcanRepository.findAll();
         for(Trashcan trashcan : trashcans){
             Record lastRecord = recordRepository.findFirstBySerialNumberOrderByDateAndTimeDesc(trashcan.getSerialNumber());
@@ -47,9 +50,9 @@ public class TrashcanService {
     }
 
     public double getLevel(double distance){
-        double dMax = 90.0;
-        double dMin = 10.0;
-        double level = (1-( (distance - dMin) / (dMax - dMin) )) * 100;
+        double maxDistance = 90.0;
+        double minDistance = 10.0;
+        double level = (1-( (distance - minDistance) / (maxDistance - minDistance) )) * 100;
         return Math.round(level * 10.0) / 10.0;
     }
 

@@ -11,8 +11,7 @@ public interface RecordRepository extends MongoRepository<Record, String> {
 
     List<Record> findAllBySerialNumber(Integer serialNumber);
     Record findFirstBySerialNumberOrderByDateAndTimeDesc(Integer serialNumber);
-
-
-
+    // Eliminar todos los records con distance > 100
+    void deleteAllByDistanceGreaterThan(Double distance);
 
 }

@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -43,12 +44,12 @@ public class RecordService {
 
     public ResponseEntity<ApiResponse> findAllRecordsOfCurrentMonth(Integer serialNumber) {
         Query query = new Query();
-        String month = LocalDateTime.now().toString().substring(0,7); // Get current month --> YYYY-MM
+        String month = LocalDateTime.now().toString().substring(0, 7); // Get current month --> YYYY-MM
 
         query.addCriteria(Criteria.where("serialNumber").is(serialNumber)
                 .andOperator(Criteria.where("$expr").is(
                         new BasicDBObject("$regexMatch",
-                                new BasicDBObject("input", new BasicDBObject("$substr", Arrays.asList("$dateAndTime", 0, 7)))
+                                new BasicDBObject("input", new BasicDBObject("$substr", Arrays.asList("$dateAndTime", 0, 10)))
                                         .append("regex", month)
                                         .append("options", "i")
                         )
@@ -59,7 +60,47 @@ public class RecordService {
         return new ResponseEntity<>(new ApiResponse(records, HttpStatus.OK), HttpStatus.OK);
     }
 
+    // findAllRecordsOfCurrentDay
+    public ResponseEntity<ApiResponse> findAllRecordsOfCurrentDay(Integer serialNumber) {
+        Query query = new Query();
+        String day = LocalDateTime.now().toString().substring(0, 10); // Get current month --> YYYY-MM
 
+        query.addCriteria(Criteria.where("serialNumber").is(serialNumber)
+                .andOperator(Criteria.where("$expr").is(
+                        new BasicDBObject("$regexMatch",
+                                new BasicDBObject("input", new BasicDBObject("$substr", Arrays.asList("$dateAndTime", 0, 10)))
+                                        .append("regex", day)
+                                        .append("options", "i")
+                        )
+                ))
+        );
 
+        List<Record> records = mongoTemplate.find(query, Record.class);
+        return new ResponseEntity<>(new ApiResponse(records, HttpStatus.OK), HttpStatus.OK);
+    }
+
+    public ResponseEntity<ApiResponse> findAllRecordsOfLastSevenDays(Integer serialNumber) {
+        //String day = LocalDateTime.now().toString().substring(0, 10); // Get current day --> YYYY-MM-DD
+        List<Record> recordsOfTheWeek = new ArrayList<>();
+
+        for (int i = 0; i < 7; i++) {
+            Query query = new Query();
+            String day = LocalDateTime.now().minusDays(i).toString().substring(0, 10);
+            System.out.println(day);
+            query.addCriteria(Criteria.where("serialNumber").is(serialNumber)
+                    .andOperator(Criteria.where("$expr").is(
+                            new BasicDBObject("$regexMatch",
+                                    new BasicDBObject("input", new BasicDBObject("$substr", Arrays.asList("$dateAndTime", 0, 10)))
+                                            .append("regex", day)
+                                            .append("options", "i")
+                            )
+                    ))
+            );
+
+            List<Record> recordsOfOneDay = mongoTemplate.find(query, Record.class);
+            recordsOfTheWeek.addAll(recordsOfOneDay);
+        }
+        return new ResponseEntity<>(new ApiResponse(recordsOfTheWeek, HttpStatus.OK), HttpStatus.OK);
+    }
 
 }

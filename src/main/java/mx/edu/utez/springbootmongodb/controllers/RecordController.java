@@ -48,4 +48,15 @@ public class RecordController {
         return service.findAllRecordsOfCurrentMonth(serialNumber);
     }
 
+    @GetMapping("/currentDayRecords/{serialNumber}")
+    public ResponseEntity<ApiResponse> getAllRecordsOfCurrentDayRecords(@PathVariable Integer serialNumber){
+        return service.findAllRecordsOfCurrentDay(serialNumber);
+    }
+
+    @GetMapping("/lastSevenDaysRecords/{serialNumber}")
+    public ResponseEntity<ApiResponse> getLastSevenDaysRecords(@PathVariable Integer serialNumber){
+        return service.findAllRecordsOfLastSevenDays(serialNumber);
+    }
+
+
 }

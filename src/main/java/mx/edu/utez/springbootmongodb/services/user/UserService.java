@@ -21,6 +21,11 @@ public class UserService {
         this.passwordEncoder = passwordEncoder;
     }
 
+    public ResponseEntity<ApiResponse> save(User user){
+
+        return new ResponseEntity<>(new ApiResponse(repository.save(user),HttpStatus.OK), HttpStatus.OK);
+    }
+
     public ResponseEntity<ApiResponse> findAll() {
         return new ResponseEntity<>(new ApiResponse(repository.findAll(), HttpStatus.OK), HttpStatus.OK);
     }
@@ -42,4 +47,10 @@ public class UserService {
         }
         return new ResponseEntity<>(new ApiResponse("User not found", HttpStatus.NOT_FOUND), HttpStatus.NOT_FOUND);
     }
+
+
+    public void delete(User user){
+        repository.delete(user);
+    }
+
 }

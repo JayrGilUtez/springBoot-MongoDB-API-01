@@ -21,6 +21,9 @@ public class TrashcanService {
         this.recordRepository = recordRepository;
     }
 
+
+
+
     public Trashcan save(Trashcan trashcan) {
 
         return trashcanRepository.save(trashcan);

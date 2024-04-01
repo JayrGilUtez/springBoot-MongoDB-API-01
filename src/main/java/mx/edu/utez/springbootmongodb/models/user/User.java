@@ -1,8 +1,6 @@
 package mx.edu.utez.springbootmongodb.models.user;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import mx.edu.utez.springbootmongodb.models.role.Role;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -11,8 +9,10 @@ import java.util.Set;
 
 @Document(collection = "users")
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
+@Builder
 public class User {
     @Id
     private String id;

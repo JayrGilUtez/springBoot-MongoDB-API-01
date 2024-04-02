@@ -62,7 +62,8 @@ public class MainSecurity {
                 .authorizeHttpRequests(req ->
                         req.requestMatchers(WHITE_LIST).permitAll()
                                 .requestMatchers("/api/v1/record/**").hasAuthority("ADMIN")
-                                .requestMatchers("/api/v1/trashcan/**").hasAuthority("ADMIN")
+                                //trashcan endpoint allowed to ADMIN and USER
+                                .requestMatchers("/api/v1/trashcan/**").hasAnyAuthority("ADMIN", "USER")
                                 .requestMatchers("/api/v1/user/**").hasAuthority("ADMIN")
                                 .anyRequest().authenticated()
                 )

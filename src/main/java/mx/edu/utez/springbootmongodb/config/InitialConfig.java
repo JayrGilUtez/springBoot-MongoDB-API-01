@@ -29,6 +29,8 @@ public class InitialConfig implements CommandLineRunner {
         databaseService.resetDatabase();
 
         Role adminRole = getOrSaveRole(new Role("ADMIN"));
+        Role userRole = getOrSaveRole(new Role("USER"));
+
         User user = new User();
         user.setMail("noriega@mail.com");
         user.setPassword(passwordEncoder.encode("123456"));
@@ -38,6 +40,16 @@ public class InitialConfig implements CommandLineRunner {
         user.setStatus(true);
         user.setBlocked(false);
         userRepository.save(user);
+
+        User user2 =new User();
+        user2.setMail("Test@mail.com");
+        user2.setPassword(passwordEncoder.encode("test"));
+        Set<Role> roles2 = new HashSet<>();
+        roles2.add(userRole);
+        user2.setRole(roles2);
+        user2.setStatus(true);
+        user2.setBlocked(false);
+        userRepository.save(user2);
     }
 
     public Role getOrSaveRole(Role role) {

@@ -22,6 +22,11 @@ public class UserController {
         this.service = service;
     }
 
+    @GetMapping("/")
+    public ResponseEntity<ApiResponse> findAll(){
+        return service.findAll();
+    }
+
     @PostMapping("/change-password")
     public ResponseEntity<ApiResponse> changePassword(@RequestBody UserDto user) {
         return service.changePassword(user.getMail(), user.getPassword());

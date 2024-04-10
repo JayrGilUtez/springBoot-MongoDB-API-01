@@ -11,7 +11,7 @@
     <groupId>mx.edu.utez</groupId>
     <artifactId>spring-boot-mongoDb</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
     <name>spring-boot-mongoDb</name>
     <description>spring-boot-mongoDb</description>
     <properties>
@@ -27,6 +27,12 @@
     </repositories>
 
     <dependencies>
+        <!-- https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-aws -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-aws</artifactId>
+            <version>2.2.6.RELEASE</version>
+        </dependency>
 
         <dependency>
             <groupId>org.eclipse.paho</groupId>
@@ -105,6 +111,8 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
+                    <mainClass>mx.edu.utez.springbootmongodb.SpringBootMongoDbApplication</mainClass>
+                    <layout>JAR</layout>
                     <excludes>
                         <exclude>
                             <groupId>org.projectlombok</groupId>

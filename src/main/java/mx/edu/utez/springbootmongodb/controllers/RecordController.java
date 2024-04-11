@@ -3,6 +3,7 @@ package mx.edu.utez.springbootmongodb.controllers;
 
 import mx.edu.utez.springbootmongodb.config.ApiResponse;
 import mx.edu.utez.springbootmongodb.models.record.Record;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import mx.edu.utez.springbootmongodb.services.record.RecordService;
@@ -56,6 +57,16 @@ public class RecordController {
     @GetMapping("/lastSevenDaysRecords/{serialNumber}")
     public ResponseEntity<ApiResponse> getLastSevenDaysRecords(@PathVariable Integer serialNumber){
         return service.findAllRecordsOfLastSevenDays(serialNumber);
+    }
+
+    @GetMapping("/location/{serialNumber}")
+    public ResponseEntity<ApiResponse> getLastRecordLocation(@PathVariable Integer serialNumber) {
+        Record lastRecord = service.findLastRecordBySerialNumber(serialNumber);
+        if (lastRecord != null) {
+            return new ResponseEntity<>(new ApiResponse(lastRecord.getLocation(), HttpStatus.OK), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(new ApiResponse("No record found for this serial number", HttpStatus.NOT_FOUND), HttpStatus.NOT_FOUND);
+        }
     }
 
 

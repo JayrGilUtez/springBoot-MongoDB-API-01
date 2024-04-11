@@ -103,4 +103,8 @@ public class RecordService {
         return new ResponseEntity<>(new ApiResponse(recordsOfTheWeek, HttpStatus.OK), HttpStatus.OK);
     }
 
+    public Record findLastRecordBySerialNumber(Integer serialNumber) {
+        return repository.findFirstBySerialNumberOrderByDateAndTimeDesc(serialNumber);
+    }
+
 }

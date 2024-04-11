@@ -22,8 +22,8 @@ public class MqttSubscriber implements MqttCallback {
     public MqttSubscriber(RecordRepository repository) {
         this.repository = repository;
     }
-    private static final String brokerUrl = "tcp://3.80.88.147"; // mientras la ip no sea elastica esta direccion ira cambiando
-    private static final String clientId = "mqttx_8f866485";
+    private static final String brokerUrl = "tcp://broker.emqx.io:1883"; // mientras la ip no sea elastica esta direccion ira cambiando
+    private static final String clientId = "mqttx_191af3a7";
     private static final String topic = "simbba/aws";
     private static final int subQos = 0; // es el nivel de qos del subscriber
 

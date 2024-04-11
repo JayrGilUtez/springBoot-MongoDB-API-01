@@ -36,7 +36,7 @@ public class RecordController {
                 .serialNumber(recordDto.getSerialNumber())
                 .distance(recordDto.getDistance())
                 .isFull(recordDto.getIsFull())
-                .dateAndTime(LocalDateTime.now().minusHours(6).toString())
+                .dateAndTime(LocalDateTime.now().toString())
                 .location(recordDto.getLocation())
                 .build();
         return service.save(record);

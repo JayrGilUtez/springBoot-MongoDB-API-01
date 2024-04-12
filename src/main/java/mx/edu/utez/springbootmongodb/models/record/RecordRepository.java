@@ -16,8 +16,6 @@ public interface RecordRepository extends MongoRepository<Record, String> {
     // Eliminar todos los records con distance > 100
     void deleteAllByDistanceGreaterThan(Double distance);
 
-    // Obtener todos los records de un bote y mes en especifco
-    @Query("'{ 'serialNumber': ?0, $expr: { $regexMatch: { input: { $substr: [ '$dateAndTime', 0, 7 ] }, regex: ?1, options: 'i' } } }'")
-    List<Record> findBySerialNumberAndMonth(Integer serialNumber, String month);
-
+    @Query(value = "{}", fields = "{ 'serialNumber' : 1}")
+    List<Record> findAllSerialNumbers();
 }

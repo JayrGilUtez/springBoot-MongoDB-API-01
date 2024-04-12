@@ -1,6 +1,7 @@
 package mx.edu.utez.springbootmongodb.models.record;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.mongodb.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -15,4 +16,6 @@ public interface RecordRepository extends MongoRepository<Record, String> {
     // Eliminar todos los records con distance > 100
     void deleteAllByDistanceGreaterThan(Double distance);
 
+    @Query(value = "{}", fields = "{ 'serialNumber' : 1}")
+    List<Record> findAllSerialNumbers();
 }

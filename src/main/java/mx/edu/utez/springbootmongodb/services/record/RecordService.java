@@ -2,8 +2,10 @@ package mx.edu.utez.springbootmongodb.services.record;
 
 import com.mongodb.BasicDBObject;
 import mx.edu.utez.springbootmongodb.config.ApiResponse;
+import mx.edu.utez.springbootmongodb.models.location.Location;
 import mx.edu.utez.springbootmongodb.models.record.Record;
 import mx.edu.utez.springbootmongodb.models.record.RecordRepository;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -13,9 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class RecordService {
@@ -105,6 +105,23 @@ public class RecordService {
 
     public Record findLastRecordBySerialNumber(Integer serialNumber) {
         return repository.findFirstBySerialNumberOrderByDateAndTimeDesc(serialNumber);
+    }
+
+    public Map<Integer, Location> findLastLocations() {
+        List<Record> records = repository.findAllSerialNumbers();
+        Map<Integer, Location> lastLocations = new HashMap<>();
+        for (Record record : records) {
+            Query query = new Query();
+            query.addCriteria(Criteria.where("serialNumber").is(record.getSerialNumber()));
+            query.with(Sort.by(Sort.Direction.DESC, "dateAndTime"));
+            query.limit(1);
+
+            Record lastRecord = mongoTemplate.findOne(query, Record.class);
+            if (lastRecord != null) {
+                lastLocations.put(record.getSerialNumber(), lastRecord.getLocation());
+            }
+        }
+        return lastLocations;
     }
 
 }

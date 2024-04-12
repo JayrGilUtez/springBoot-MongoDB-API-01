@@ -2,6 +2,7 @@ package mx.edu.utez.springbootmongodb.controllers;
 
 
 import mx.edu.utez.springbootmongodb.config.ApiResponse;
+import mx.edu.utez.springbootmongodb.models.location.Location;
 import mx.edu.utez.springbootmongodb.models.record.Record;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,6 +11,7 @@ import mx.edu.utez.springbootmongodb.services.record.RecordService;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("api/v1/record")
@@ -67,6 +69,12 @@ public class RecordController {
         } else {
             return new ResponseEntity<>(new ApiResponse("No record found for this serial number", HttpStatus.NOT_FOUND), HttpStatus.NOT_FOUND);
         }
+    }
+
+    @GetMapping("/lastLocations")
+    public ResponseEntity<ApiResponse> getLastLocations() {
+        Map<Integer, Location> lastLocations = service.findLastLocations();
+        return new ResponseEntity<>(new ApiResponse(lastLocations, HttpStatus.OK), HttpStatus.OK);
     }
 
 
